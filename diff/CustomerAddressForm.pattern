@@ -1,0 +1,4 @@
+$address = new Address(
+	$this->getValue('id_address'),
+	$this->language->id
+);
