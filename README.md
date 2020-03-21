@@ -2,7 +2,7 @@
 
 ![LabelGrup Logo](logo.png)
 
-Override for PS 1.7.X to fix CVE-2020-5250 vulnerability
+Module for PS 1.7.X to fix CVE-2020-5250 vulnerability (WIP)
 
 Check: 
 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-5250
