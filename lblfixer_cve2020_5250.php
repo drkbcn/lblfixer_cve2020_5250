@@ -62,10 +62,10 @@ class Lblfixer_cve2020_5250 extends Module
     {
         // Assign SMARTY variables
         $this->context->smarty->assign(array(
-            'motd' => "Running on: ".php_uname('u')."\nReady and waiting...\n\n",
+            'motd' => "Running on: ".php_uname('u')."\nListing files, please be patient...\n\n",
             'module_dir' => $this->_path,
             'module_version' => $this->version,
-            'token' => Configuration::get('LBLCVE_TOKEN')
+            'sectoken' => Configuration::get('LBLCVE_TOKEN')
         ));
        
         return $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');

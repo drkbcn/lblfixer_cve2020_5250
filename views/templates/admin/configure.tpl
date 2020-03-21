@@ -27,26 +27,36 @@ $(document).ready(function () {
 	var query = $.ajax({
 		type: "POST",
 		url: "..{$module_dir|escape:'html':'UTF-8'}ajax.php",
-		data: "action=list_patches&token={$token|escape:'html':'UTF-8'}",
+		data: "action=list_patches&token={$sectoken|escape:'html':'UTF-8'}",
 		dataType: 'json',
 		success: function(res) {
-			// Foreach file to be applied
-			$('#result').append(res);
+			if (parseInt(res.patches) > 0)
+			{
+				$('#patch_cve').prop('disabled', '');
+				$('#result').append("Found "+res.patches+" patch/es to be applied:\n");
+				$.each(res.names, function(i, item) {
+					$('#result').append("  + "+item+" ("+res.path[i]+")\n");
+				});
+			}
+			else
+			{
+				$('#result').append("Your PrestaShop seems to be already patched.");
+			}
 			doScroll($('#result'));
 		}
 	});	
 
-	// On click
+	// On click PATCH button
 	$("#patch_cve").click(function () {
 		var query = $.ajax({
-		  type: "POST",
-		  url: "..{$module_dir|escape:'html':'UTF-8'}ajax.php",
-		  data: "action=patch&token={$token|escape:'html':'UTF-8'}",
-		  dataType: 'json',
-		  success: function(res) {
-			$('#result').append(res.message);
-			doScroll($('#result'));
-		  }
+			type: "POST",
+			url: "..{$module_dir|escape:'html':'UTF-8'}ajax.php",
+			data: "action=patch&token={$sectoken|escape:'html':'UTF-8'}",
+			dataType: 'json',
+			success: function(res) {
+				$('#result').append(res.message);
+				doScroll($('#result'));
+			}
 		});	
 	});	
 });
@@ -102,7 +112,7 @@ function doScroll(element_scr)
 							<div class="row">
 								<br/>
 								<div class="col-md-12">
-									<button type="button" id="show_info" name="show_info" class="btn pull-righ btn-primary col-md-12">
+									<button type="button" disabled="disabled" id="patch_cve" name="patch_cve" class="btn pull-righ btn-primary col-md-12">
 										{l s='Patch now' mod='lblfixer_cve2020_5250'}&nbsp;<i class="icon-bug"></i>
 									</button>
 								</div>
